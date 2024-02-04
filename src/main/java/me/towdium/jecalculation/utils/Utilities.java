@@ -2,9 +2,15 @@ package me.towdium.jecalculation.utils;
 
 import static net.minecraft.client.resources.I18n.format;
 
+
+
+
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.BreakIterator;
 import java.text.DecimalFormat;
@@ -46,6 +52,8 @@ import org.apache.commons.lang3.text.WordUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -427,12 +435,15 @@ public class Utilities {
 
     public static class Json {
 
+        private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+
         @Nullable
         public static NBTTagCompound read(File f) {
-            try {
-                String s = FileUtils.readFileToString(f, "UTF-8");
-                return read(s);
-            } catch (IOException e) {
+            try (FileReader reader = new FileReader(f)) {
+                JsonElement element = gson.fromJson(reader, JsonElement.class);
+                return (NBTTagCompound) NBTJson.toNbt(element);
+            } catch (IOException | JsonSyntaxException e) {
                 e.printStackTrace();
                 return null;
             }
@@ -452,25 +463,23 @@ public class Utilities {
         }
 
         public static void write(NBTTagCompound nbt, File f) {
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(f);
-                fos.write(write(nbt).getBytes(StandardCharsets.UTF_8));
+            try (FileWriter writer = new FileWriter(f)) {
+                String json = gson.toJson(NBTJson.toJson(nbt));
+                FileUtils.writeStringToFile(f, json, StandardCharsets.UTF_8);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         }
 
         public static String write(NBTTagCompound nbt) {
             return NBTJson.toJson(nbt);
+        }
+
+        public static void checkAndUpdateFormat(File file) {
+            NBTTagCompound nbt = read(file);
+            if (nbt != null) {
+                write(nbt, file); // This will automatically use the pretty-print format
+            }
         }
     }
 

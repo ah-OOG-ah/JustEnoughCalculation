@@ -43,6 +43,16 @@ import me.towdium.jecalculation.utils.wrappers.Pair;
 @SideOnly(Side.CLIENT)
 public class Controller {
 
+    private static void checkAndUpdateJsonFormat() {
+        File file = JecaConfig.recordFile; // Adjust the path as necessary
+        NBTTagCompound nbt = Utilities.Json.read(file);
+        if (nbt != null) {
+            Utilities.Json.write(nbt, file); // This will automatically use the pretty-print format
+        } else {
+            System.out.println("Failed to read the record.json file or the file does not exist.");
+        }
+    }
+
     public static final String KEY_MATH = "math";
     public static final String KEY_CRAFT = "craft";
     public static final String KEY_PLAYER = "player";
@@ -234,6 +244,8 @@ public class Controller {
             rMathClient = new RecordMath(new NBTTagCompound());
         }
         LPlaceholder.state = s;
+
+        checkAndUpdateJsonFormat();
     }
 
     public static void writeToLocal() {
