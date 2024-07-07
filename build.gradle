@@ -3,7 +3,3 @@
 plugins {
     id 'com.gtnewhorizons.gtnhconvention'
 }
-
-dependencies {
-    implementation 'com.google.code.gson:gson:2.8.6'
-}
