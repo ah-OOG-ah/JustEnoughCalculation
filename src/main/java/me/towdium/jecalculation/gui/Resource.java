@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import me.towdium.jecalculation.Tags;
+import me.towdium.jecalculation.JustEnoughCalculation;
 
 /**
  * Author: towdium
@@ -16,7 +16,9 @@ import me.towdium.jecalculation.Tags;
 @SideOnly(Side.CLIENT)
 public class Resource {
 
-    public static final ResourceLocation location = new ResourceLocation(Tags.MODID, "textures/gui/resources.png");
+    public static final ResourceLocation location = new ResourceLocation(
+        JustEnoughCalculation.MODID,
+        "textures/gui/resources.png");
     // letters abbr for button & icon: N - normal, F - focused, D - disabled
     // letters abbr for fuzzy related: N - normal, F - fuzzy
     // letters abbr for state related: N - normal, A - active

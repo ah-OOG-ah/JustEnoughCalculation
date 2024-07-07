@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import me.towdium.jecalculation.JustEnoughCalculation;
 import me.towdium.jecalculation.Tags;
 import me.towdium.jecalculation.gui.JecaGui;
 import me.towdium.jecalculation.nei.adapter.IAdapter;
@@ -38,7 +39,7 @@ public class NEICalculatorConfig implements IConfigureNEI {
 
     @Override
     public String getName() {
-        return Tags.MODNAME;
+        return JustEnoughCalculation.MODNAME;
     }
 
     @Override

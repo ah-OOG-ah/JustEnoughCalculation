@@ -2,15 +2,10 @@ package me.towdium.jecalculation.utils;
 
 import static net.minecraft.client.resources.I18n.format;
 
-
-
-
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.BreakIterator;
 import java.text.DecimalFormat;
@@ -49,11 +44,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -61,7 +56,6 @@ import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import me.towdium.jecalculation.JustEnoughCalculation;
-import me.towdium.jecalculation.Tags;
 import me.towdium.jecalculation.polyfill.NBTHelper;
 import me.towdium.jecalculation.utils.wrappers.Pair;
 
@@ -169,7 +163,7 @@ public class Utilities {
     }
 
     public static NBTTagCompound getTag(ItemStack is) {
-        return NBTHelper.getOrCreateSubCompound(is, Tags.MODID);
+        return NBTHelper.getOrCreateSubCompound(is, JustEnoughCalculation.MODID);
     }
 
     public static EntityClientPlayerMP getPlayer() {
@@ -435,8 +429,8 @@ public class Utilities {
 
     public static class Json {
 
-        private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+        private static final Gson gson = new GsonBuilder().setPrettyPrinting()
+            .create();
 
         @Nullable
         public static NBTTagCompound read(File f) {

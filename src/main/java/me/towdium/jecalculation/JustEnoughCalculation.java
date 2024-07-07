@@ -23,21 +23,24 @@ import me.towdium.jecalculation.network.CommonProxy;
 @ParametersAreNonnullByDefault
 @SuppressWarnings("unused")
 @Mod(
-    modid = Tags.MODID,
-    name = Tags.MODNAME,
+    modid = JustEnoughCalculation.MODID,
+    name = JustEnoughCalculation.MODNAME,
     version = Tags.VERSION,
     dependencies = "required-after:NotEnoughItems",
     acceptedMinecraftVersions = "[1.7.10]")
 public class JustEnoughCalculation {
 
-    public static Logger logger = LogManager.getLogger(Tags.MODID);
+    public static final String MODID = "jecalculation";
+    public static final String MODNAME = "Just Enough Calculation";
+
+    public static Logger logger = LogManager.getLogger(MODID);
 
     @SidedProxy(
-        clientSide = Tags.GROUPNAME + ".network.ClientProxy",
-        serverSide = Tags.GROUPNAME + ".network.CommonProxy")
+        clientSide = "me.towdium.jecalculation.network.ClientProxy",
+        serverSide = "me.towdium.jecalculation.network.CommonProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance(Tags.MODID)
+    @Mod.Instance(MODID)
     public static JustEnoughCalculation INSTANCE;
 
     @Mod.EventHandler
